@@ -20,4 +20,12 @@ public class ProjetoResource {
 		return projeto.toXML();
 	}
 	
+	@GET
+	@Path("json/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String buscaToJson(@PathParam("id") long id) {
+		Projeto projeto = new ProjetoDAO().busca(id);
+		return projeto.toJson();
+	}
+	
 }

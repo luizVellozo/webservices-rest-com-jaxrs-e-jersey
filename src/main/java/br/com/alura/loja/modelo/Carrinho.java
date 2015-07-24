@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.google.gson.Gson;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
@@ -75,6 +76,10 @@ public class Carrinho {
 
 	public String toXML() {
 		return new XStream().toXML(this);
+	}
+	
+	public String toJson() {
+		return new Gson().toJson(this);
 	}
 
 }
