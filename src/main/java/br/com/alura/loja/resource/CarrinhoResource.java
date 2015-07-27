@@ -3,6 +3,7 @@ package br.com.alura.loja.resource;
 import java.net.URI;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -38,6 +39,19 @@ public class CarrinhoResource {
 
         URI location = URI.create("/carrinhos/"+carrinho.getId());
         return Response.created(location).build();
+    }
+	
+	/*
+	 * Se quizer o DELETE realmente idempotente (seguindo a especificação), 
+	 * ao invés de receber o ID do produto eu deveria receber um ID único que representasse 
+	 * o ID do produto dentro deste carrinho de maneira única. Como: /carrinhos/ID_DO_CARRINHO/produtos/ID_DO_PRODUTO_E_CONTADOR_UNICO
+	*/
+	@Path("{id}/produtos/{produtoId}")
+    @DELETE
+    public Response remove(@PathParam("id") long id, @PathParam("produtoId") long produtoId) {
+		Carrinho carrinho = new CarrinhoDAO().busca(id);
+        carrinho.remove(produtoId);
+        return Response.ok().build();
     }
 	
 }
