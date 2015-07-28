@@ -10,6 +10,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.glassfish.grizzly.http.server.HttpServer;
+import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.filter.LoggingFilter;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,10 +26,13 @@ import br.com.alura.loja.resource.Servidor;
 public class ClienteTest {
 	
 	private HttpServer server;
+	private Client client;
 
 	@Before
 	public void iniciaServidor(){
 		server = Servidor.startServidor();
+		ClientConfig config = new ClientConfig(new LoggingFilter());
+		client = ClientBuilder.newClient(config);
 	}
 	
 	@After
@@ -37,8 +42,9 @@ public class ClienteTest {
 	
 	@Test
 	public void testeQueBuscarUmCarrinhoTrazOCarrinhoEsperado() {
-		Client client = ClientBuilder.newClient();
+		
 		WebTarget target = client.target("http://localhost:8080");
+		
 		String conteudo = target.path("/carrinhos/1").request().get(String.class);
 		Carrinho carrinho = (Carrinho) new XStream().fromXML(conteudo);
 		
@@ -47,7 +53,6 @@ public class ClienteTest {
 	
 	@Test
 	public void testeQueTrazProjetoDeId1() {
-		Client client = ClientBuilder.newClient();
 		WebTarget target = client.target("http://localhost:8080");
 		String conteudo = target.path("/projetos/1").request().get(String.class);
 		
@@ -59,7 +64,6 @@ public class ClienteTest {
 	
 	@Test
 	public void testeQueAdicionaUmCarrinhoViaPost() {
-		Client client = ClientBuilder.newClient();
         WebTarget target = client.target("http://localhost:8080");
         
         //precisamos criar um carrinho e transforma-lo em XML para realizar o post:
