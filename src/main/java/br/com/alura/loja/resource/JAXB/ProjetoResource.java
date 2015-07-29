@@ -1,4 +1,4 @@
-package br.com.alura.loja.resource;
+package br.com.alura.loja.resource.JAXB;
 
 import java.net.URI;
 
@@ -12,35 +12,26 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.thoughtworks.xstream.XStream;
+import br.com.alura.loja.dao.JAXB.ProjetoDAO;
+import br.com.alura.loja.modelo.JAXB.Projeto;
 
-import br.com.alura.loja.dao.ProjetoDAO;
-import br.com.alura.loja.modelo.Projeto;
 
-@Path("projetos")
+@Path("jaxb/projetos")
 public class ProjetoResource {
 	
 	@GET
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_XML)
-	public String busca(@PathParam("id") long id) {
+	public Projeto busca(@PathParam("id") long id) {
 		Projeto projeto = new ProjetoDAO().busca(id);
-		return projeto.toXML();
+		return projeto;
 	}
 	
-	@GET
-	@Path("json/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public String buscaToJson(@PathParam("id") long id) {
-		Projeto projeto = new ProjetoDAO().busca(id);
-		return projeto.toJson();
-	}
 	
 	//Podemos testar Post com o CURL passando o parrametro -d
 	@POST
     @Consumes(MediaType.APPLICATION_XML)
-    public Response adiciona(String conteudo) {
-		Projeto projeto = (Projeto) new XStream().fromXML(conteudo);
+    public Response adiciona(Projeto projeto) {
         new ProjetoDAO().adiciona(projeto);
         
         URI location = URI.create("/projetos/"+projeto.getId());

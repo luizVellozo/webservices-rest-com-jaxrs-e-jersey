@@ -1,11 +1,12 @@
-package br.com.alura.loja.dao;
+package br.com.alura.loja.dao.JAXB;
 
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
-import br.com.alura.loja.modelo.Projeto;
+import br.com.alura.loja.modelo.JAXB.Projeto;
+
 
 public class ProjetoDAO {
     private static Map<Long, Projeto> banco = new HashMap<Long, Projeto>();

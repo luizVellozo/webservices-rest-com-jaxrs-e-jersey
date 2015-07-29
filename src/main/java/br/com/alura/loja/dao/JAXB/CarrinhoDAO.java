@@ -1,11 +1,12 @@
-package br.com.alura.loja.dao;
+package br.com.alura.loja.dao.JAXB;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
-import br.com.alura.loja.modelo.Carrinho;
-import br.com.alura.loja.modelo.Produto;
+import br.com.alura.loja.modelo.JAXB.Carrinho;
+import br.com.alura.loja.modelo.JAXB.Produto;
+
 
 public class CarrinhoDAO {
 	
